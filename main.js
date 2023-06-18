@@ -1,20 +1,33 @@
-
-// .then(r => r.json()). then(body => console.log(body))
-
-async function asyncFetch() {
-    const r = await fetch("https://jsonplaceholder.typicode.com/users", {
-        method: "GET",
-        headers: {
-            "Accept" : "application/json",
-            "Content-Type" : "application/json"
-        }
-    })
-    if (r.ok === true) {
-        return r.json()
+/**
+ * 
+ * @param {number} age 
+ * @param {string} country Code pays sur 2 caractères
+ * @returns {boolean}
+ */
+function canDrive(age, country) {
+    if ((age >= 18) || (age >= 16 && country === "FR")) {
+        return true
     } else {
-        throw new Error("Erreur")
+        return false
     }
 }
 
-const x = asyncFetch().then(r => console.log(r)).then(console.log(x[0]))
+/**
+ * @returns {Array<string>}  //tableau de chaines de caractères
+ */
+function myArray () {
 
+}
+const b = myArray()
+
+/**
+ * @returns {{id: number, title: string, body: string}}
+ */
+function ObjCreate(id, title, body) {
+        this.id = id
+        this.title = title
+        this.body = body
+}
+
+const c = new ObjCreate(1, "Salutation", "Salut tout le monde")
+console.log(c)
