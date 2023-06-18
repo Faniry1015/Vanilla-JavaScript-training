@@ -13,7 +13,7 @@ function canDrive(age, country) {
 }
 
 /**
- * @returns {Array<string>}  //tableau de chaines de caractères
+ * @returns {Array<string>}  //tableau de chaines de caractères ou string[]
  */
 function myArray () {
 
@@ -31,3 +31,26 @@ function ObjCreate(id, title, body) {
 
 const c = new ObjCreate(1, "Salutation", "Salut tout le monde")
 console.log(c)
+
+/**
+ * @returns {Promise<{id: number, title: string, body: string}>}  résolu avec un objet
+ */
+async function myPromise () {
+
+}
+const d = myPromise()
+
+/**
+* @typedef {object} Post 
+* @property {number} id
+* @property {string} title
+* @property {string} body
+*/
+
+/**
+ * @returns {((str: string, age: number) => number)}
+ */
+function myFunction() {
+
+}
+const e = myFunction()
