@@ -1,0 +1,9 @@
+#stopProg {
+    width: 300px;
+    height: 30000px;
+    border: solid black 2px
+}
+
+.red {
+    background-color: rgb(145, 59, 59);
+}
