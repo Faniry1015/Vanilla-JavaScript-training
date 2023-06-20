@@ -1,45 +1,48 @@
-const firstLi  = document.querySelector("ul li:first-child")
-firstLi.setAttribute("hidden", "hidden")  // Créer un attribut "hidden"
-firstLi.removeAttribute("hidden")  // Enlever l'attribut
-console.log(firstLi.getAttribute("class"))  // Trouver la valeur de l'attribut. Nul si n'existe pas 
+/**
+ * Créer un paragraphe à partir d'un objet
+ * @param {Object} post 
+ * @returns {string}
+ */
+function createArticle(post) {
+    const article = document.createElement("article")
+    article.innerHTML = `
+    <h1>${post.title}</h1>
+    <p>${post.body}</p>
+    `
+    return article
+}
 
-// .classList
-console.log(firstLi.classList.remove("red"))  //classList a plusieurs méthodes interessantes
-firstLi.classList.add("weird")              //ajoute une class weird
+async function main() {
+        const loader = document.createElement("p")
+        loader.textContent = "Chargement du contenu JSON ..."
 
-setInterval(()=> {                      //faire clignoté l'élément
-    firstLi.classList.toggle("red")        // l'efface si existe et l'ajoute si n'existe pas
-}, 2000)
+        const wrapper = document.querySelector("#LastPosts")
+        wrapper.append(loader)
+    try {
+        const r = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5", {
+            headers: {
+                Accept: "application/json",
+            },
+            method: "GET"
+        })
 
-// style : permet d'ajouter des propriétés CSS. mais utiliser "Camel case : backgroundColor" et non les tirets
-const secondLi  = document.querySelector("ul li:nth-child(2)")
-secondLi.style.fontWeight = "bold"
-console.log(getComputedStyle(secondLi).fontWeight)  // Pour trouver la valeur de l'attribut style
+        if (!r.ok) {
+            throw new Error("Impossible de charger le fichier JSON")
+        }
 
-// Création et Ajout d'un élément HTML (dans un noeud: .appendChild())
-// Ajout d'élément à partir de n'importe quel élément Html : .append() (RECOMMANDE) ; on peut ajouter directement du texte
-const newLi = document.createElement("li")
-newLi.innerHTML = "Je suis la nouvelle composante de liste JS"
-document.querySelector("ul").appendChild(newLi)  //prepend pour le mettre au début
-// On ne peut pas mettre un élément à plusieurs endroits. Faut le copier
+        loader.remove()
+        const posts = await r.json()
+    
+        for (let post of posts) {
+            wrapper.append(createArticle(post))
+        }
 
-// Ajouter à n'importe quel position 
-const myUl = document.querySelector("ul")
-const myDiv = document.createElement("div")
-myDiv.textContent = "Je suis la nouvelle div JS"
-myUl.insertAdjacentElement("beforebegin", myDiv)
-// Préférer append pour les choses à l'intérieure de l'élément
-// <!-- beforebegin -->
-// <p>
-//   <!-- afterbegin -->
-//   foo
-//   <!-- beforeend -->
-// </p>
-// <!-- afterend -->
+    } catch (e) {
+        loader.textContent = "Impossible d'accéder au serveur"
+        loader.style.color = "red"
+        return
+    }
+}
 
-
-
-
-
-
+main()
 
