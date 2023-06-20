@@ -1,48 +1,53 @@
-/**
- * Créer un paragraphe à partir d'un objet
- * @param {Object} post 
- * @returns {string}
- */
 function createArticle(post) {
     const article = document.createElement("article")
-    article.innerHTML = `
-    <h1>${post.title}</h1>
-    <p>${post.body}</p>
-    `
+    article.append(createElementWithText("h2", post.title))
+    article.append(createElementWithText("p", post.body))
+// Rapide mais pas sécurisé si quelqu'un entre du code à risque dans title et body du JSON 
+    // article.innerHTML = `
+    // <h2>${post.title}</h2>
+    // <p>${post.body}</p>
+    // `
     return article
 }
 
+//Pour la méthode sécurisé, on a besoin de cette methode
+function createElementWithText(tagname, content) {
+    const element = document.createElement(tagname)
+    element.innerText = content
+    return element
+}
+
 async function main() {
-        const loader = document.createElement("p")
-        loader.textContent = "Chargement du contenu JSON ..."
+    const loader = document.createElement("p")
+loader.innerText = "Chargement..."
 
-        const wrapper = document.querySelector("#LastPosts")
-        wrapper.append(loader)
-    try {
-        const r = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5", {
-            headers: {
-                Accept: "application/json",
-            },
-            method: "GET"
-        })
+const wrapper = document.querySelector("#lastPosts")
+wrapper.append(loader)
 
-        if (!r.ok) {
-            throw new Error("Impossible de charger le fichier JSON")
-        }
+try {
+    const r = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5", 
+    {
+        headers: {
+            Accept: "application/json"
+        },
+        method: "GET"
+    })
 
-        loader.remove()
-        const posts = await r.json()
-    
-        for (let post of posts) {
-            wrapper.append(createArticle(post))
-        }
+    loader.remove()
+    const posts = await r.json()
+    console.log(posts)
 
-    } catch (e) {
-        loader.textContent = "Impossible d'accéder au serveur"
-        loader.style.color = "red"
-        return
+    for (let post of posts) {
+        wrapper.append(createArticle(post))
+    }
+    } 
+catch (e) {
+    loader.innerText = "Erreur de chargement"
+    loader.style.color = "red"
+    return
     }
 }
 
 main()
+
 
