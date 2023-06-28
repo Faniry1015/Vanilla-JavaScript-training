@@ -13,13 +13,17 @@ class Carousel {
      * @param {Object} [options.slidesToScroll=1] Nombre d'éléments à faire défiler
      * @param {Object} [options.slidesToScroll=1] Nombre d'éléments visible dans un slide
      * @param {boolean} [options.loop = false]  Doit-t-on bouclé en fin de carousel
+     * @param {boolean} [options.pagination = false]
+     * @param {boolean} [options.navigation = true]
      */
     constructor(element, options = {}) {
         this.element = element
         this.options = Object.assign({}, {      //options par défaut si on en entre pas
             slidesToScroll: 1,                  //Un seul élément scroller
             slidesVisible: 1,                    //Un seul élément visible
-            loop: false
+            loop: false,
+            pagination: false,
+            navigation: true,
         }, options)
         let children = [].slice.call(element.children)
         this.isMobile = false
@@ -39,6 +43,12 @@ class Carousel {
             return item
         });
         this.setStyle()
+        if (this.options.navigation === true) {
+            this.createNavigation()
+        }
+        if (this.options.pagination === true) {
+            this.createPagination()
+        }
         this.createNavigation()
 
         //Evenements
@@ -64,6 +74,10 @@ class Carousel {
         this.items.forEach(item => item.style.width = ((100 / this.slidesVisible) / ratio) + "%");
     }
 
+    /**
+     * 
+     * Crée les flèches e navigation
+     */
     createNavigation() {
         let nextButton = this.createDivWithClass("carousel__next")
         let prevButton = this.createDivWithClass("carousel__prev")
@@ -85,6 +99,29 @@ class Carousel {
             } else {
                 nextButton.classList.remove("carousel__next--hidden")
             }
+        })
+    }
+
+    /**
+     * 
+     * Crée la pagination dans le DOM
+     */
+    createPagination() {
+        let pagination = this.createDivWithClass("carousel__pagination")
+        let buttons = []
+        this.root.appendChild(pagination)
+        for (let i =  0 ; i< this.items.length ; i = i + this.options.slidesToScroll) {
+            let button = this.createDivWithClass("carousel__pagination__button")
+            button.addEventListener("click", () => this.gotoItem(i))
+            pagination.appendChild(button)
+            buttons.push(button)
+        }
+        this.onMove(index => {
+           let activeButton = buttons[Math.floor(index / this.options.slidesToScroll)] 
+           if (activeButton) {
+            buttons.forEach(button => button.classList.remove("carousel__pagination__button--active"))
+            activeButton.classList.add("carousel__pagination__button--active")
+           }
         })
     }
 
@@ -164,10 +201,20 @@ class Carousel {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
+// })
+
+let onReady = function () {
+
     new Carousel(document.querySelector("#carousel1"), {
         slidesToScroll: 1,         //Nombre de scroll par click
         slidesVisible: 3,           //Nombre d'élément visible à l'écran
-        loop: false              //Si true permet de faire une boucle avec la carousel (revient au début ou à la fin)
+        loop: true,              //Si true permet de faire une boucle avec la carousel (revient au début ou à la fin)
+        pagination: true
     })
-})
+
+}
+
+if (document.readyState !== "loading") {
+    onReady()
+}
