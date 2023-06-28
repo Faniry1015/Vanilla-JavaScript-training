@@ -1,0 +1,138 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: sans-serif;
+    padding: 50px;
+    background: linear-gradient(45deg, #f37646, #f3e946) center center no-repeat;
+    line-height: 1.4;
+}
+
+.title {
+    font-size: 25px;
+    color: #FFF;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.item {
+    margin: 40px 10px;
+    background-color: #fff;
+    box-shadow: 0 15px #3232321a, 0 5px 15px #0000001a;
+    transition: transform 0.5s;
+    transform: translate3d(0, -2px, 0);
+}
+
+.item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.item__body {
+    padding: 25px;
+}
+
+.item__title {
+    font-size: 24px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #232323;
+}
+
+.item__description {
+    color: #585858
+}
+
+.items {
+    position: relative;
+}
+
+/**CAROUSEL */
+.carousel {
+    position: relative;
+}
+
+.carousel__container {
+    transition: transform 0.3s;
+    transform: translate3d(0, 0, 0);
+}
+
+.carousel__container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.carousel__item {
+    float: left;
+}
+
+.carousel__next,
+.carousel__prev {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #fff url(../Images/fleche-droite.png) center center no-repeat;
+    background-size: 20px 20px;
+    border-radius: 50%;
+    top: 50%;
+    margin-top: -20px;
+    box-shadow: 0 15px #3232321a, 0 5px 15px #0000001a;
+    cursor: pointer;
+    right: -20px;
+    transition: transform 0.3s, opacity 0.3s
+}
+
+.carousel__next:hover,
+.carousel__prev:hover {
+    transform: scale(1.2)
+}
+
+.carousel__prev {
+    right: auto;
+    left: -20px;
+    background-image: url(../Images/fleche-gauche.png);
+}
+
+.carousel__next--hidden,
+.carousel__prev--hidden {
+    opacity: 0
+}
+
+.carousel__pagination {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: none;
+}
+
+.carousel__pagination__button {
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 3px;
+    box-shadow: 0 2px #3232321a;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.carousel__pagination__button--active,
+.carousel__pagination__button:hover {
+    transform: scale(1.4);
+}
+
+@media screen and (min-width: 800px) {
+    .carousel__pagination {
+        display: block;
+    }
+}
