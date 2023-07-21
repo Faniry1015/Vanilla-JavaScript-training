@@ -1,41 +1,34 @@
 class Rectangle {
-    constructor(length, width) {
-        if (length <=0 || width <=0) {
-            throw new Error("Les côtés d'un rectangle ne peuvent être négatives")
-        }
-        this.length = length
+    constructor(width, length) {
         this.width = width
+        this.length = length
     }
 
-    get  perimeter() {
-        return (this.length + this.width)*2
-    } 
-
-    set notes(n) {
-        if(Array.isArray(n)) {  //doit être un tableau
-            this._notes = n
-        } else {
-            throw new Error("Tableau obligatoire")
-        }
+    get perimeter() {
+        return (this.width + this.length) * 2
     }
 
-    static color = "blue"  // ne peut s'appeler qu'appartir de la classe
-
-    static fonctionStat() {
-        console.log("Ne s'appel qu'avec \"Rectangle")
+    get isValid() {
+        return this.width > 0 && this.length > 0
     }
-    
-    size = "big"
+
+    isBiggerThan(rect) {
+        return this.perimeter > rect.perimeter
+    }
 }
 
-try {
-    const r1 = new Rectangle(6, 2)
-    console.log(r1)
-    console.log(r1.perimeter) // pas de () avec les get ni set
-    r1.notes = [12, 16] 
-    console.log(r1)
-    console.log(Rectangle.color)
-    console.log(r1.size)
-} catch(e) {
-    console.log(e)
+const r = new Rectangle(10, 20)
+console.log(r.perimeter)
+const r1 = new Rectangle(-10, 30)
+console.log(r1.isValid)
+
+class Square extends Rectangle {
+    constructor(width) {
+        super(width, width)
+    }
 }
+
+const c = new Square(10)
+console.log(c.perimeter)
+
+console.log(r.isBiggerThan(c))
