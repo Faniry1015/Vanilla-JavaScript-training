@@ -1,34 +1,58 @@
-class Rectangle {
-    constructor(width, length) {
-        this.width = width
-        this.length = length
+class Book {
+    constructor(title, pages) {
+        this.title = title
+        this.pages = pages
     }
 
-    get perimeter() {
-        return (this.width + this.length) * 2
+    #page = 1
+    
+    get page() {
+        return this.#page
     }
 
-    get isValid() {
-        return this.width > 0 && this.length > 0
+    nextPage() {
+        if (this.#page < this.pages) {
+            return this.#page++
+        }
     }
 
-    isBiggerThan(rect) {
-        return this.perimeter > rect.perimeter
-    }
-}
-
-const r = new Rectangle(10, 20)
-console.log(r.perimeter)
-const r1 = new Rectangle(-10, 30)
-console.log(r1.isValid)
-
-class Square extends Rectangle {
-    constructor(width) {
-        super(width, width)
+    closeBook() {
+        return this.#page = 1
     }
 }
 
-const c = new Square(10)
-console.log(c.perimeter)
+class Library {
+    books = []
+    addBook(book) {
+        this.books.push(book)
+    }
 
-console.log(r.isBiggerThan(c))
+    addBooks(b) {
+        b.forEach(element => {
+            this.books.push(element)
+        });
+    }
+
+
+    findBooksByLetter(letter) {
+        return this.books.filter((book) => {
+            return book.title[0].toLowerCase() === letter.toLowerCase()
+        })
+    }
+}
+
+const b = new Book("Le seigneur des anneaux", 200)
+b.nextPage()
+console.log(b.page)
+
+const l = new Library()
+l.addBook(b)
+l.addBooks([
+    new Book("Peter Pan", 100),
+    new Book("Batman", 175),
+    new Book("Super Man", 200),
+    new Book("Salope", 250),
+]
+)
+console.log(l)
+console.log(l.findBooksByLetter("S"))
