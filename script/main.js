@@ -1,17 +1,35 @@
 async function fetchUsers() {
     const r = await fetch("https://jsonplaceholder.typicode.com/users", {
-        headers : {
+        headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"
         },
         method: "GET",
-        body: JSON.stringify({title: "Mon premier article"})
+        // body: JSON.stringify({title: "Mon premier article"})
     })
     if (r.ok === true) {
-        return r.json()
+        return data = r.json()
     }
     throw new Error("Erreur serveur")
 }
 
-fetchUsers()
+let r = fetchUsers()
     .then(console.log)
+
+r.forEach(element => {
+    const body = document.querySelector("body")
+    const section = document.createElement("section")
+    const title = document.createElement("h2")
+    const name = document.createElement("p")
+    const email = document.createElement("a")
+
+    title.innerText = element.title
+    name.innerText = element.name
+    name.innerText = element.email
+
+    body.appendChild(section)
+    section.appendChild(title)
+    section.appendChild(name)
+    section.appendChild(email)
+})
+
