@@ -5,31 +5,32 @@ async function fetchUsers() {
             "Content-Type": "application/json"
         },
         method: "GET",
-        // body: JSON.stringify({title: "Mon premier article"})
     })
     if (r.ok === true) {
-        return data = r.json()
+        let users = await r.json()
+        for (let user of users) {
+            const body = document.querySelector("body")
+            const section = document.createElement("section")
+            const id = document.createElement("h2")
+            const name = document.createElement("p")
+            const email = document.createElement("a")
+        
+            id.innerText = user.id
+            name.innerText = user.name
+            email.innerText = user.email
+        
+            body.appendChild(section)
+            section.appendChild(id)
+            section.appendChild(name)
+            section.appendChild(email)
+        }
+    } else {
+        throw new Error("Erreur serveur")
     }
-    throw new Error("Erreur serveur")
+
 }
 
-let r = fetchUsers()
-    .then(console.log)
+fetchUsers()
 
-r.forEach(element => {
-    const body = document.querySelector("body")
-    const section = document.createElement("section")
-    const title = document.createElement("h2")
-    const name = document.createElement("p")
-    const email = document.createElement("a")
 
-    title.innerText = element.title
-    name.innerText = element.name
-    name.innerText = element.email
-
-    body.appendChild(section)
-    section.appendChild(title)
-    section.appendChild(name)
-    section.appendChild(email)
-})
 
