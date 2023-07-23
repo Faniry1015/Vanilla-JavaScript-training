@@ -1,3 +1,17 @@
+function createElementWithContent (tagname, content) {
+    let element = document.createElement(tagname)
+    element.innerText = content
+    return element
+}
+
+function createSection (user) {
+    let sect = document.createElement("section")
+    sect.appendChild(createElementWithContent("h2", user.id))
+    sect.appendChild(createElementWithContent("p", user.name))
+    sect.appendChild(createElementWithContent("p", user.email))
+    return sect
+}
+
 async function fetchUsers() {
     const r = await fetch("https://jsonplaceholder.typicode.com/users", {
         headers: {
@@ -8,26 +22,14 @@ async function fetchUsers() {
     })
     if (r.ok === true) {
         let users = await r.json()
+
+        const body = document.querySelector("body")
         for (let user of users) {
-            const body = document.querySelector("body")
-            const section = document.createElement("section")
-            const id = document.createElement("h2")
-            const name = document.createElement("p")
-            const email = document.createElement("a")
-        
-            id.innerText = user.id
-            name.innerText = user.name
-            email.innerText = user.email
-        
-            body.appendChild(section)
-            section.appendChild(id)
-            section.appendChild(name)
-            section.appendChild(email)
+            body.append(createSection(user))
         }
     } else {
         throw new Error("Erreur serveur")
     }
-
 }
 
 fetchUsers()
