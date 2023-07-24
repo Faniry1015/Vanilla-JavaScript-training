@@ -1,11 +1,9 @@
 class CreateList {
     items = []
     itemId = 0
+
     addItem(item) {
         this.item = item
-    }
-
-    showNewItem() {
         ++this.itemId
 
         const checkInput = document.createElement("input")
@@ -34,15 +32,15 @@ class CreateList {
         console.log(this.items)
     }
 
-    // removeItem() {
-    //     const delItemLabel = document.querySelectorAll(".bi-trash")
-    //     for (let item of delItemLabel) {
-    //         item.addEventListener("click", (event) => {
-    //             event.preventDefault()
-    //             item.parentElement.parentElement.remove()
-    //         })
-    //     }
-    // }
+    removeItem() {
+        const delItemLabel = document.querySelectorAll(".bi-trash")
+        for (let item of delItemLabel) {
+            item.addEventListener("click", (event) => {
+                event.preventDefault()
+                item.parentElement.parentElement.remove()
+            })
+        }
+    }
 }
 const mainList = new CreateList()
 
@@ -59,7 +57,6 @@ addBtn.addEventListener("click", (event) => {
     event.preventDefault()
     const newItem = new ToDoListItem(addItemLabel.value)
     mainList.addItem(newItem)
-    mainList.showNewItem()
     console.log(mainList)
 })
 
