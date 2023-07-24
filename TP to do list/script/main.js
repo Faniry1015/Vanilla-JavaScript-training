@@ -1,51 +1,64 @@
 class CreateList {
     items = []
-    itemId = 0
+    prevItemId = 0
 
     addItem(item) {
-        this.item = item
-        ++this.itemId
+        item.itemId = ++this.prevItemId
 
         const checkInput = document.createElement("input")
         checkInput.setAttribute("type", "checkbox")
         checkInput.className = "form-check-input"
-        checkInput.setAttribute("id", `todo-${this.itemId}`)
+        checkInput.setAttribute("id", `todo-${item.itemId}`)
 
         const checkLabel = document.createElement("label")
-        checkLabel.textContent = this.item.label
-        checkLabel.setAttribute("for", `todo-${this.itemId}`)
+        checkLabel.textContent = item.label
+        checkLabel.setAttribute("for", `todo-${item.itemId}`)
 
-        const checkLabel2 = document.createElement("label")
-        checkLabel2.className = "ms-auto btn btn-danger btn-sm"
-        checkLabel2.innerHTML = `
-                    <i class="bi-trash">
-                    </i>
-                `
+        const trashLabel = document.createElement("label")
+        trashLabel.className = "ms-auto btn btn-danger btn-sm"
+
+        const trashBtnSel = document.createElement("i")
+        trashBtnSel.className = "bi-trash"
+        trashBtnSel.setAttribute("id", `${item.itemId}`)
+        trashLabel.append(trashBtnSel)
 
         const checkLi = document.createElement("li")
         checkLi.className = "todo list-group-item d-flex align-items-center"
-        checkLi.append(checkInput, checkLabel, checkLabel2)
+        checkLi.append(checkInput, checkLabel, trashLabel)
         const listGroup = document.querySelector(".list-group")
         listGroup.append(checkLi)
 
-        this.items.push(this.item)
-        console.log(this.items)
+        this.items.push(item)
+        console.log(this)
     }
 
-    removeItem() {
-        const delItemLabel = document.querySelectorAll(".bi-trash")
-        for (let item of delItemLabel) {
-            item.addEventListener("click", (event) => {
-                event.preventDefault()
-                item.parentElement.parentElement.remove()
+    removeItem(item) {
+        let trashBtnAll = document.querySelectorAll(".bi-trash")
+        console.log(trashBtnAll)
+        for (let trashBtn of trashBtnAll) {
+            trashBtn.addEventListener("click", () => {
+                console.log(trashBtnAll)
+                for (let item of this.items) {
+                    if (parseInt(trashBtn.getAttribute("id"), 10)  === item.itemId) {
+                        console.log("OK")
+                        console.log(trashBtn.getAttribute("id"), item.itemId)
+                        console.log(trashBtn.parentNode)
+                        trashBtn.parentNode.parentNode.remove()
+                        console.log(this.items)
+                        this.items.splice(item)
+                        console.log(this.items)
+                    }
+                }
             })
+
         }
     }
 }
-const mainList = new CreateList()
+    const mainList = new CreateList()
 
 
 class ToDoListItem {
+    itemId = null
     constructor(label) {
         this.label = label
     }
@@ -57,17 +70,6 @@ addBtn.addEventListener("click", (event) => {
     event.preventDefault()
     const newItem = new ToDoListItem(addItemLabel.value)
     mainList.addItem(newItem)
-    console.log(mainList)
+    mainList.removeItem()
 })
-
-// function ableRemoveItem() {
-//     const removeItemLabel = document.querySelectorAll(".bi-trash")
-//     for (let item of removeItemLabel) {
-//         item.addEventListener("click", (event) => {
-//             event.preventDefault()
-//             item.parentElement.parentElement.remove()
-//         })
-//     }
-// }
-// ableRemoveItem()
 
