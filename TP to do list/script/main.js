@@ -1,5 +1,6 @@
 class CreateList {
     items = []
+    oldItems = []
     addItem(item) {
         this.items.push(item)
     }
@@ -9,9 +10,11 @@ class CreateList {
             const checkInput = document.createElement("input")
             checkInput.setAttribute("type", "checkbox")
             checkInput.className = "form-check-input"
+            checkInput.setAttribute("id", `todo-${this.items.indexOf(item) + 1}`)
 
             const checkLabel = document.createElement("label")
             checkLabel.textContent = item.label
+            checkLabel.setAttribute("for", `todo-${this.items.indexOf(item) + 1}`)
 
             const checkLabel2 = document.createElement("label")
             checkLabel2.className = "ms-auto btn btn-danger btn-sm"
@@ -26,6 +29,19 @@ class CreateList {
             const listGroup = document.querySelector(".list-group")
             listGroup.append(checkLi)
         })
+        this.oldItems.push(this.items)
+        this.items = this.items.splice(0, -1)
+        console.log(this.items)
+    }
+
+    removeItem() {
+        const delItemLabel = document.querySelectorAll(".bi-trash")
+        for (let item of delItemLabel) {
+            item.addEventListener("click", (event) => {
+                event.preventDefault()
+                item.parentElement.parentElement.remove()
+            })
+        }
     }
 }
 const mainList = new CreateList()
@@ -34,10 +50,6 @@ const mainList = new CreateList()
 class ToDoListItem {
     constructor(label) {
         this.label = label
-    }
-
-    deleteItem() {
-        delete this
     }
 }
 
