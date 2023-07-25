@@ -32,7 +32,7 @@ class CreateList {
         console.log(this)
     }
 
-    removeItem(item) {
+    removeItem() {
         let trashBtnAll = document.querySelectorAll(".bi-trash")
         // console.log("1: ", trashBtnAll)
         for (let trashBtn of trashBtnAll) {
@@ -52,14 +52,14 @@ class CreateList {
     }
 
     filterDoneTasks() {
-        const unchecked = document.querySelectorAll("input[class=form-check-input]:not(:checked)")
-        const uncheckedAr = Array.from(unchecked)
-        console.log("uncheck: ", uncheckedAr)
-        const doneBtn = document.querySelector("button[data-filter=done")
-        doneBtn.addEventListener("click", (event) => {
-            event.preventDefault()
-            console.log(uncheckedAr)
-        })
+        const doneBtn = document.querySelector("button[data-filter=done]")
+        doneBtn.addEventListener("click", () => {
+            const unchecked = document.querySelectorAll("input[class=form-check-input]:not(:checked)")
+            console.log("uncheck: ", unchecked)
+            // unchecked.forEach((e) => {
+            // console.log(e)
+            // })
+        }) 
     }
 }
 const mainList = new CreateList()
@@ -79,4 +79,4 @@ addBtn.addEventListener("click", (event) => {
     mainList.addItem(newItem)
     mainList.filterDoneTasks()
     mainList.removeItem()
-})
+})  
