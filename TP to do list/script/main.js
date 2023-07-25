@@ -34,21 +34,32 @@ class CreateList {
 
     removeItem(item) {
         let trashBtnAll = document.querySelectorAll(".bi-trash")
-        console.log("1: ", trashBtnAll)
+        // console.log("1: ", trashBtnAll)
         for (let trashBtn of trashBtnAll) {
             trashBtn.addEventListener("click", (event) => {
                 event.preventDefault()
-                console.log("2: ", trashBtnAll)
+                // console.log("2: ", trashBtnAll)
                 for (let item of this.items) {
                     if (parseInt(trashBtn.getAttribute("id"), 10) === item.itemId) {
-                        console.log( "3: ",trashBtn.getAttribute("id"), item.itemId)
+                        // console.log( "3: ",trashBtn.getAttribute("id"), item.itemId)
                         trashBtn.parentNode.parentNode.remove()
                         this.items.splice(this.items.indexOf(item), 1)
-                        console.log(this.items)
+                        // console.log(this.items)
                     }
                 }
             })
         }
+    }
+
+    filterDoneTasks() {
+        const unchecked = document.querySelectorAll("input[class=form-check-input]:not(:checked)")
+        const uncheckedAr = Array.from(unchecked)
+        console.log("uncheck: ", uncheckedAr)
+        const doneBtn = document.querySelector("button[data-filter=done")
+        doneBtn.addEventListener("click", (event) => {
+            event.preventDefault()
+            console.log(uncheckedAr)
+        })
     }
 }
 const mainList = new CreateList()
@@ -66,7 +77,6 @@ addBtn.addEventListener("click", (event) => {
     event.preventDefault()
     const newItem = new ToDoListItem(addItemLabel.value)
     mainList.addItem(newItem)
+    mainList.filterDoneTasks()
     mainList.removeItem()
 })
-
-// const doneTask = document.querySelectorAll()
