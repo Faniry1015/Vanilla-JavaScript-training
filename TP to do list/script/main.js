@@ -34,28 +34,24 @@ class CreateList {
 
     removeItem(item) {
         let trashBtnAll = document.querySelectorAll(".bi-trash")
-        console.log(trashBtnAll)
+        console.log("1: ", trashBtnAll)
         for (let trashBtn of trashBtnAll) {
-            trashBtn.addEventListener("click", () => {
-                console.log(trashBtnAll)
+            trashBtn.addEventListener("click", (event) => {
+                event.preventDefault()
+                console.log("2: ", trashBtnAll)
                 for (let item of this.items) {
-                    if (parseInt(trashBtn.getAttribute("id"), 10)  === item.itemId) {
-                        console.log("OK")
-                        console.log(trashBtn.getAttribute("id"), item.itemId)
-                        console.log(trashBtn.parentNode)
+                    if (parseInt(trashBtn.getAttribute("id"), 10) === item.itemId) {
+                        console.log( "3: ",trashBtn.getAttribute("id"), item.itemId)
                         trashBtn.parentNode.parentNode.remove()
-                        console.log(this.items)
-                        this.items.splice(item)
+                        this.items.splice(this.items.indexOf(item), 1)
                         console.log(this.items)
                     }
                 }
             })
-
         }
     }
 }
-    const mainList = new CreateList()
-
+const mainList = new CreateList()
 
 class ToDoListItem {
     itemId = null
@@ -73,3 +69,4 @@ addBtn.addEventListener("click", (event) => {
     mainList.removeItem()
 })
 
+// const doneTask = document.querySelectorAll()
