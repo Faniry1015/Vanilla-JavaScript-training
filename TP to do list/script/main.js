@@ -57,12 +57,10 @@ class CreateList {
         unchecked.forEach((uncheckedBoxe) => {
             uncheckedBoxe.parentNode.classList.remove("d-flex")
             uncheckedBoxe.parentNode.hidden = "true"
-            console.log(uncheckedBoxe.parentNode)
         })
         checked.forEach((checkedBoxe) => {
             checkedBoxe.parentNode.classList.add("d-flex")
             checkedBoxe.parentNode.hidden = "false"
-            console.log(checkedBoxe.parentNode)
         })
     }
 
@@ -71,28 +69,19 @@ class CreateList {
         const checked = document.querySelectorAll("input[class=form-check-input]:checked")
         unchecked.forEach((uncheckedBoxe) => {
             uncheckedBoxe.parentNode.classList.add("d-flex")
-            uncheckedBoxe.parentNode.hidden = "true"
-            console.log(uncheckedBoxe.parentNode)
+            uncheckedBoxe.parentNode.hidden = "false"
         })
         checked.forEach((checkedBoxe) => {
             checkedBoxe.parentNode.classList.remove("d-flex")
-            checkedBoxe.parentNode.hidden = "false"
-            console.log(checkedBoxe.parentNode)
+            checkedBoxe.parentNode.hidden = "true"
         })
     }
 
     removeFilterTasks() {
-        const unchecked = document.querySelectorAll("input[class=form-check-input]:not(:checked)")
-        const checked = document.querySelectorAll("input[class=form-check-input]:checked")
-        unchecked.forEach((uncheckedBoxe) => {
-            uncheckedBoxe.parentNode.classList.add("d-flex")
-            uncheckedBoxe.parentNode.hidden = "true"
-            console.log(uncheckedBoxe.parentNode)
-        })
-        checked.forEach((checkedBoxe) => {
-            checkedBoxe.parentNode.classList.remove("d-flex")
-            checkedBoxe.parentNode.hidden = "false"
-            console.log(checkedBoxe.parentNode)
+        const allCheckboxes = document.querySelectorAll("input[class=form-check-input]")
+        allCheckboxes.forEach((boxe) => {
+            boxe.parentNode.classList.add("d-flex")
+            boxe.parentNode.hidden = "false"
         })
     }
 }
@@ -116,8 +105,8 @@ addBtn.addEventListener("click", (event) => {
 })
 
 const doneBtn = document.querySelector("button[data-filter=done]")
-const toDoBtn = document.querySelector("button[data-filter=done]")
-const removeFilterBtn = document.querySelector("button[data-filter=done]")
+const toDoBtn = document.querySelector("button[data-filter=todo]")
+const removeFilterBtn = document.querySelector("button[data-filter=all]")
 doneBtn.addEventListener("click", () => mainList.filterDoneTasks()) 
-doneBtn.addEventListener("click", () => mainList.filterDoneTasks()) 
-doneBtn.addEventListener("click", () => mainList.filterDoneTasks()) 
+toDoBtn.addEventListener("click", () => mainList.filterToDoTasks()) 
+removeFilterBtn.addEventListener("click", () => mainList.removeFilterTasks()) 
