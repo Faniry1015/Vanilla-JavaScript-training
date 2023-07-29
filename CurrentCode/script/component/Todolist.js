@@ -1,17 +1,29 @@
-<!DOCTYPE html>
-<html lang="fr"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TodoList</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+/**
+ * @typedef {object} Todo
+ * @property {number} id
+ * @property {string} title
+ * @property {boolean} completed
+ */
+export class TodoList {
+    /**
+    * @type {Todo[]}
+    */
+    #todos = []
 
-    <script src="./script/app.js" type="module" defer></script>
-</head>
-<body>
+    /**
+     * @param {Todo[]} todos 
+     */
+    constructor(todos) {
+        this.#todos = todos
+    }
 
-    <section class="container pt-5" id="todolist">
-        <!--
+
+    /**
+     * 
+     * @param {HTMLElement} element 
+     */
+    appendTo(element) {
+        element.innerHTML = `
         <form class="d-flex pb-4">
             <input required="" class="form-control" type="text" placeholder="Acheter des patates..." name="title" data-com.bitwarden.browser.user-edited="yes">
             <button class="btn btn-primary">Ajouter</button>
@@ -33,10 +45,8 @@
                 <i class="bi-trash">
                 </i>
                 </label>
-            </li> -->
-            </ul>
-        </main>
-    </section>
+            </li>
+        `
 
-</body>
-</html>
+    }
+}
