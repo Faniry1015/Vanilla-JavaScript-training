@@ -15,5 +15,3 @@ list.appendTo(document.querySelector("#todolist"))
     document.body.prepend(alertElement)
     console.error(e)
 }
-
-
