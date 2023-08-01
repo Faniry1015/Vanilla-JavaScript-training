@@ -82,3 +82,11 @@ mediaQuery.addEventListener("change", () => console.log(mediaQuery.matches))
 
 
 //Images
+//Récupérer largeur d'une image
+const image = document.querySelector("img") 
+console.log(image.width) //risque : pourrais retourné 0 si la connexion est lente (image pas encore chargé au moment de l'exécution du script)
+//Utilisé load() (attend que l'image se charge) 
+image.addEventListener("load", () => {
+    console.log("largeur <img>:", image.width) //Attention: pas la taille réelle mais la taille de la balise img
+    console.log("largeur réelle image:",image.naturalWidth) //taille réelle de l'image
+})
