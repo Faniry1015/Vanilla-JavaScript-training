@@ -7,7 +7,7 @@ html, body {
 
 nav {
     position:sticky;
-    top: 0;
+    top: 10px;
     background-color: antiquewhite;
 }
 
@@ -36,5 +36,10 @@ li:hover {
     background-color: rgba(127, 255, 212, 0.5);
     margin-top: 50px;
     text-align: center;
+}
+
+.observed {
+    border-top: solid 1px grey;
+    border-bottom: solid 1px grey;
 }
 
