@@ -18,7 +18,7 @@ export function createElement(tagName, attributes = {}) {
 /**
  * 
  * @param {string} id 
- * @return {DocumentFragment} 
+ * @returns {DocumentFragment} 
  */
 export function cloneTemplate(id) {
     return document.getElementById(id).content.cloneNode(true)

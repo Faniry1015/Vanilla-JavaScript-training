@@ -90,3 +90,4 @@ image.addEventListener("load", () => {
     console.log("largeur <img>:", image.width) //Attention: pas la taille réelle mais la taille de la balise img
     console.log("largeur réelle image:",image.naturalWidth) //taille réelle de l'image
 })
+
