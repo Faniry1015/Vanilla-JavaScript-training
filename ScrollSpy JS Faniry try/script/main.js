@@ -1,5 +1,4 @@
 /**
- * 
  * @param {string} section 
  * @param {string} navElement 
  */
@@ -9,14 +8,17 @@ function observer(section, navElement) {
 
     const obs = new IntersectionObserver((sections) => {
         for (let sect of sections) {
-            if (sect.isIntersecting) {
+            if (sect.intersectionRatio > 0) {
+                const parent = correspondantNav.parentElement
+                console.log(sect.target)
+                parent.querySelectorAll(".observed").forEach(element => {
+                    element.classList.remove("observed")
+                });
                 correspondantNav.classList.add("observed")
-            } else {
-                correspondantNav.classList.remove("observed")
             }
         }
     }, {
-        threshold: 0.7
+        threshold: 0
     })
     obs.observe(currentSection)
 }

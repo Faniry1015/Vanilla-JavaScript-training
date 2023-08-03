@@ -1,0 +1,43 @@
+html, body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+nav {
+    position:sticky;
+    top: 10px;
+    background-color: antiquewhite;
+}
+
+ul {
+    display:flex
+    
+}
+li {
+    list-style: none;
+    padding: 10px;
+}
+
+li a {
+    text-decoration: none;
+    color: Grey;
+}
+
+li:hover {
+    border-top: solid 1px grey;
+    border-bottom: solid 1px grey;
+}
+
+.sectionDiv {
+    border: solid 2px rgba(0, 0, 0, 0.5);
+    background-color: rgba(127, 255, 212, 0.5);
+    margin-top: 50px;
+    text-align: center;
+}
+
+.active {
+    border-top: solid 1px grey;
+    border-bottom: solid 1px grey;
+}
