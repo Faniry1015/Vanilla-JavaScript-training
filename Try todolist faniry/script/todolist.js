@@ -1,17 +1,19 @@
 import { createElement } from "./dom.js"
 
 
-class todolist {
-    constructor() {
-
+export class todolist {
+    constructor(todos) {
+        this.#todos = todos
     }
 }
 
-class todolistItem {
+export class todolistItem {
     /**
-     * @param {string} label 
+     * @param {string} todo 
      */
-    constructor(label) {
-        this.label = label
+    constructor(todo) {
+        this.#todo = todo
+
+        createElement("div", {id:""})    
     }
 }

@@ -1,7 +1,7 @@
 /**
  * 
- * @param {String} tagname 
- * @param {Object} attributes 
+ * @param {string} tagname 
+ * @param {object} attributes 
  * @return {HTMLElement} 
  */
 export function createElement(tagname, attributes = {}) {
@@ -10,5 +10,8 @@ export function createElement(tagname, attributes = {}) {
         element.setAttribute(attribute, value)
     }
     return element
+}
 
+export function cloneTemplate(id) {
+    return document.getElementById(id).content.cloneNode(true)
 }

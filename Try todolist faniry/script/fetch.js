@@ -1,6 +1,10 @@
-export async function fetchJSON() {
+export async function fetchJSON(url, options) {
     try {
-        const r = await fetch("https://jsonplaceholder.typicode.com/todos?_start=0&_limit=5")
+        const headers = {
+            Accept:"application/json",
+            ...options.headers
+        }
+        const r = await fetch(url, {...headers, options})
         if (r.ok) {
             return r.json()
         } else {
