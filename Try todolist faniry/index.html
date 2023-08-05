@@ -13,22 +13,35 @@
 
 <body>
 
-        <form action="">
+    <template id="todolistTemp">
+        <form id="form" action="">
             <div id="addDiv">
                 <input type="text" name="newtodo" id="newtodo" placeholder="Nouvelle tâche">
-                <button type="submit">Ajouter tâche</button>
+                <button id="addBtn" type="submit">Ajouter tâche</button>
             </div>
 
             <div id="tasksDiv">
                 Liste des tâches : 
-                <div id="todo-1">
-                    <input type="checkbox" name="checkB" id="checkB">
-                    <label for="checkB" id="taskLabel">FirstTask</label>
-                    <button type="button">Delete task</button>
-                </div>
             </div>
 
         </form>
+    </template>
+
+    <template id="itemTemp">
+        <div id="todo-1">
+            <input type="checkbox" name="checkB" id="checkB">
+            <label for="checkB" id="taskLabel">FirstTask</label>
+            <button type="button">Delete task</button>
+        </div>
+    </template>
+
+    <div id="todolistDiv">
+
+    </div>
+
+
+
+       
 
 </body>
 
