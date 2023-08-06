@@ -16,14 +16,32 @@ export class Todolist {
      * @param {HTMLElement} element 
      */
     appendTo(element) {
-        const form = cloneTemplate("todolistTemp").firstElementChild
-        element.appendChild(form)
+        const todoListTemp = cloneTemplate("todolistTemp").firstElementChild
+        element.appendChild(todoListTemp)
 
         this.#todos.forEach(todo => {
             const item = new TodolistItem(todo)
             const tasksDiv = document.getElementById("tasksDiv")
             tasksDiv.append(item)
-        });
+        })
+
+        const form = document.getElementById("form")
+        form.addEventListener("submit", (e) => {
+            const t= Date.now()
+            e.preventDefault()
+            const newLabel = new FormData(document.getElementById("form")).get("newtodo")
+            const newTask = {
+                id: t,
+                title: newLabel,
+                completed: false,
+            }
+
+            const newAddTask = new TodolistItem(newTask)
+            const tasksDiv = document.getElementById("tasksDiv")
+            tasksDiv.append(newAddTask)
+
+            this.#todos.push(newTask)
+        })
     }
 
     addTask() {
@@ -63,10 +81,6 @@ export class TodolistItem {
         deleteBtn.addEventListener("click", (e) => {
             e.currentTarget.parentNode.remove()
         })
-
-
-        console.log(checkbox)
-        console.log(label)
 
         return itemDiv
     }
