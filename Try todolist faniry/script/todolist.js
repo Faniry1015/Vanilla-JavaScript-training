@@ -29,7 +29,7 @@ export class Todolist {
         form.addEventListener("submit", (e) => {
             const t= Date.now()
             e.preventDefault()
-            const newLabel = new FormData(document.getElementById("form")).get("newtodo")
+            const newLabel = new FormData(form).get("newtodo")
             const newTask = {
                 id: t,
                 title: newLabel,
@@ -51,6 +51,10 @@ export class Todolist {
             const title = new FormData(document.getElementById("form"))
             console.log(title)
         })
+    }
+
+    onUpdate() {
+        
     }
 }
 
