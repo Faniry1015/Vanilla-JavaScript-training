@@ -8,6 +8,9 @@ export class Todolist {
 
     #todos = []
 
+    /** @type {HTMLUlElement} */
+    #elementList = []
+
     constructor(todos) {
         this.#todos = todos
     }
@@ -21,13 +24,13 @@ export class Todolist {
 
         this.#todos.forEach(todo => {
             const item = new TodolistItem(todo)
-            const tasksDiv = document.getElementById("tasksDiv")
-            tasksDiv.append(item)
+            this.#elementList = document.getElementById("tasksDiv")
+            this.#elementList.append(item.element)
         })
 
         const form = document.getElementById("form")
         form.addEventListener("submit", (e) => {
-            const t= Date.now()
+            const t = Date.now()
             e.preventDefault()
             const newLabel = new FormData(form).get("newtodo")
             const newTask = {
@@ -42,6 +45,11 @@ export class Todolist {
 
             this.#todos.push(newTask)
         })
+
+        this.#elementList.addEventListener("delete", ({ detail: todo }) => {
+            this.#todos = this.#todos.filter((task) => task !== todo)
+        })
+
     }
 
     addTask() {
@@ -54,12 +62,13 @@ export class Todolist {
     }
 
     onUpdate() {
-        
+
     }
 }
 
 export class TodolistItem {
     #todo = {}
+    #element = []
 
     #t = Date.now()
 
@@ -69,23 +78,39 @@ export class TodolistItem {
     constructor(todo) {
         this.#todo = todo
 
-        const itemDiv = document.getElementById("itemTemp").content.cloneNode(true).firstElementChild
-        const checkbox = itemDiv.querySelector("input")
-        const label = itemDiv.querySelector("label")
-        const deleteBtn = itemDiv.querySelector("button")
+        this.#element = document.getElementById("itemTemp").content.cloneNode(true).firstElementChild
+        const checkbox = this.#element.querySelector("input")
+        const label = this.#element.querySelector("label")
+        const deleteBtn = this.#element.querySelector("button")
 
         checkbox.setAttribute("id", this.#t)
         if (this.#todo.completed) {
-            checkbox.setAttribute("checked","")
+            checkbox.setAttribute("checked", "")
         }
 
         label.innerText = this.#todo.title
         label.setAttribute("for", this.#t)
 
-        deleteBtn.addEventListener("click", (e) => {
-            e.currentTarget.parentNode.remove()
+        deleteBtn.addEventListener("click", () => {
+            this.removeItem()
         })
 
-        return itemDiv
+
     }
+
+    get element() {
+        return this.#element
+    }
+
+    removeItem() {
+        const event = new CustomEvent("delete", {
+            detail: this.#todo,
+            bubbles: true,
+            cancelable: true,
+        })
+        this.#element.dispatchEvent(event)
+        this.#element.remove()
+    }
+
+ 
 }
