@@ -30,39 +30,41 @@ export class Todolist {
 
         const form = document.getElementById("form")
         form.addEventListener("submit", (e) => {
-            const t = Date.now()
             e.preventDefault()
-            const newLabel = new FormData(form).get("newtodo")
-            const newTask = {
-                id: t,
-                title: newLabel,
-                completed: false,
-            }
-
-            const newAddTask = new TodolistItem(newTask)
-            const tasksDiv = document.getElementById("tasksDiv")
-            tasksDiv.append(newAddTask)
-
-            this.#todos.push(newTask)
+            this.#addTask()
         })
 
         this.#elementList.addEventListener("delete", ({ detail: todo }) => {
             this.#todos = this.#todos.filter((task) => task !== todo)
+            this.#onUpdate()
+        })
+
+        this.#elementList.addEventListener("toggle", ({detail: todo}) => {
+            todo.completed = !todo.completed
+            this.#onUpdate()
         })
 
     }
 
-    addTask() {
-        const addBtn = document.getElementById("addBtn")
-        addBtn.addEventListener("click", (e) => {
-            e.preventDefault()
-            const title = new FormData(document.getElementById("form"))
-            console.log(title)
-        })
+    #addTask() {
+        const t = Date.now()
+        const form = document.getElementById("form")
+        const title = new FormData(form).get("newtodo")
+        console.log(title)
+        const newTodo = {
+            id: t,
+            title: title,
+            completed: false,
+        }
+        const newItem = new TodolistItem(newTodo)
+
+        this.#todos.push(newTodo)
+        this.#elementList.append(newItem.element)
+        this.#onUpdate
     }
 
-    onUpdate() {
-
+    #onUpdate() {
+        localStorage.setItem("myTasks", JSON.stringify(this.#todos))
     }
 }
 
@@ -91,10 +93,8 @@ export class TodolistItem {
         label.innerText = this.#todo.title
         label.setAttribute("for", this.#t)
 
-        deleteBtn.addEventListener("click", () => {
-            this.removeItem()
-        })
-
+        deleteBtn.addEventListener("click", () => this.#removeItem())
+        checkbox.addEventListener("change", () => this.#toggleCheck(checkbox))
 
     }
 
@@ -102,7 +102,7 @@ export class TodolistItem {
         return this.#element
     }
 
-    removeItem() {
+    #removeItem() {
         const event = new CustomEvent("delete", {
             detail: this.#todo,
             bubbles: true,
@@ -112,5 +112,17 @@ export class TodolistItem {
         this.#element.remove()
     }
 
- 
+    #toggleCheck(checkbox) {
+        if (checkbox.checked) {
+            this.#element.classList.add("checked")
+        } else {
+            this.#element.classList.remove("checked")
+        }
+        const event = new CustomEvent("toggle", {
+            detail: this.#todo,
+            bubbles: true,
+            cancelable: true
+        })
+        this.#element.dispatchEvent(event)
+    }
 }
