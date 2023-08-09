@@ -1,0 +1,19 @@
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    list-style: none;
+    padding: 20px;
+}
+
+.navLink {
+    text-decoration: none;
+    color: black;
+}
+
+.sect {
+    margin: 50px;
+    border: solid 1px black;
+    background-color: beige;
+}
