@@ -30,7 +30,7 @@ class InfinitePagination {
         this.#target = document.querySelector(element.dataset.target)
         this.#elements = JSON.parse(element.dataset.elements)
         this.#observer = new IntersectionObserver((entries) => {
-            for (let entry of entries) {
+            for (const entry of entries) {
                 if (entry.isIntersecting) {
                     this.#loadMore()
                 }
@@ -48,7 +48,6 @@ class InfinitePagination {
             const url = new URL(this.#endpoint)
             url.searchParams.set("_limit", 5)
             url.searchParams.set("_page", this.#page)
-            console.log(url.toString())
             const comments = await fetchJSON(url.toString())
             if (comments.length === 0) {
                  this.#observer.disconnect()
@@ -78,6 +77,73 @@ class InfinitePagination {
 
 }
 
+class fetchForm {
+
+    
+    /**@type {string} */
+    #endpoint
+    /**@type {HTMLTemplateElement} */
+    #template
+    /**@type {HTMLElement} */
+    #target
+    /**@type {Object} */
+    #elements
+
+    /**
+     * @param {HTMLFormElement} form 
+     */
+    constructor (form) {
+        this.#endpoint = form.dataset.endpoint
+        this.#template = document.querySelector(form.dataset.template)
+        this.#target = document.querySelector(form.dataset.target)
+        this.#elements = JSON.parse(form.dataset.elements)
+
+        form.addEventListener("submit", e => {
+            e.preventDefault()
+            this.#submitForm(e.currentTarget)
+        })
+    }
+
+    /**
+     * @param {HTMLFormElement} form 
+     */
+    async #submitForm(form) {
+        const button = form.querySelector("button")
+        button.setAttribute("disabled", "")
+        try {
+            const data = new FormData(form)
+            const comment = await fetchJSON(this.#endpoint, {
+                method: "POST",
+                json: Object.fromEntries(data)
+            })
+            const commentElement = this.#template.content.cloneNode(true)
+            for (const [key, selector] of Object.entries(this.#elements)) {
+                commentElement.querySelector(selector).innerText = comment[key]
+            }
+            this.#target.prepend(commentElement)
+            form.reset()
+            button.removeAttribute("disabled")
+            form.insertAdjacentElement(
+                "beforebegin",
+                alertElement("Merci pour votre commentaire", "success")
+            )
+        } catch (e) {
+            const errorElement = alertElement("Erreur serveur")
+            form.insertAdjacentElement(
+                "beforebegin",
+                errorElement
+            )
+            errorElement.addEventListener("close", () => {
+                button.removeAttribute("disabled")
+            })
+        }
+    }
+ }
+
 document
     .querySelectorAll(".js-infinite-pagination")
     .forEach(el => new InfinitePagination(el))
+
+    document
+    .querySelectorAll(".js-form-fetch")
+    .forEach(form => new fetchForm(form))
