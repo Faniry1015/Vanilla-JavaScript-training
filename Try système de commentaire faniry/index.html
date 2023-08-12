@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="./styles/style.css">
 
-    <script src="./script/main.js" type="module" defer></script>
+    <script src="./script/app.js" type="module" defer></script>
 </head>
 
 <body>
@@ -31,16 +31,18 @@
         <template id="commentTempl">
             <div class="comment">
                 <div class="userName"></div>
-                <div class="userCommment"></div>
+                <div class="userComment"></div>
             </div>
         </template>
     </div>
 
     <div
-        data-url=""
+        class="js-infinit-pagination"
+        data-url="https://jsonplaceholder.typicode.com/comments?_limit=5"
         data-template="#commentTempl"
         data-target=".comments"
         data-elements= '{"name": ".userName", "body": ".userComment"}'>
+
         <div id="loader">loading comments...</div>
     </div>
 
