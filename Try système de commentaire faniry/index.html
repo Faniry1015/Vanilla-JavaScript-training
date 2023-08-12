@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Training Faniry</title>
+
+    <link rel="stylesheet" href="./styles/style.css">
+
+    <script src="./script/main.js" type="module" defer></script>
+</head>
+
+<body>
+    <article>
+        <h1>Article with commentaire système</h1>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
+    </article>
+
+    <form action="" method="post">
+        <input type="text" name="user" id="user" placeholder="Votre nom">
+        <input type="text" name="email" id="email" placeholder="Votre mail">
+        <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Your comment"></textarea>
+    </form>
+
+    <div class="comments">
+        <!--Here goes the comments-->
+
+        <template id="commentTempl">
+            <div class="comment">
+                <div class="userName"></div>
+                <div class="userCommment"></div>
+            </div>
+        </template>
+    </div>
+
+    <div
+        data-url=""
+        data-template="#commentTempl"
+        data-target=".comments"
+        data-elements= '{"name": ".userName", "body": ".userComment"}'>
+        <div id="loader">loading comments...</div>
+    </div>
+
+
+
+</body>
+
+</html>
