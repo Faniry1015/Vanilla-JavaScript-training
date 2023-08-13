@@ -17,9 +17,17 @@
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
+        <h1>Article with commentaire système</h1>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
     </article>
 
-    <form action="" method="post">
+    <form action="" method="post"
+    data-url="https://jsonplaceholder.typicode.com/comments"
+    data-template="#commentTempl"
+    data-target=".comments"
+    data-elements= '{"name": ".userName", "body": ".userComment"}'>
         <input type="text" name="user" id="user" placeholder="Votre nom">
         <input type="text" name="email" id="email" placeholder="Votre mail">
         <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Your comment"></textarea>
@@ -27,6 +35,10 @@
 
     <div class="comments">
         <!--Here goes the comments-->
+
+        <div id="alert" style="display:none">
+            <button>close</button>
+        </div>
 
         <template id="commentTempl">
             <div class="comment">
@@ -38,7 +50,7 @@
 
     <div
         class="js-infinit-pagination"
-        data-url="https://jsonplaceholder.typicode.com/comments?_limit=5"
+        data-url="https://jsonplaceholder.typicode.com/comments"
         data-template="#commentTempl"
         data-target=".comments"
         data-elements= '{"name": ".userName", "body": ".userComment"}'>

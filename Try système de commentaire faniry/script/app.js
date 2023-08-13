@@ -14,6 +14,11 @@ class InfinitePagination {
     #elements
     /** @param {IntersectionObserver} */
     #observer
+    /**@param {Number} */
+    #page = 1
+    /**@param {Boolean} */
+    #loading = false
+
     constructor(element) {
         this.#loader = element
         this.#url = element.dataset.url
@@ -31,17 +36,33 @@ class InfinitePagination {
     }
 
     async #loadMore() {
-        const url = await fetchJSON(this.#url)
-        for (const element of url) {
-            const commentDiv = this.#template.content.firstElementChild.cloneNode(true)
-            for (const [key, selector] of Object.entries(this.#elements)) {
-                commentDiv.querySelector(selector).innerText = element[key]
-            }
-            this.#target.append(commentDiv)  
+        if (this.#loading) {
+            return
         }
-
-        
-        
+        this.#loading = true
+        const url = new URL (this.#url)
+        url.searchParams.set("_limit", 5)
+        url.searchParams.set("_page", this.#page)
+        try {
+            const comments = await fetchJSON(url)
+            if (comments.length === 0) {
+                this.#observer.disconnect()
+                this.#loader.remove()
+                return
+            }
+            for (const element of comments) {
+                const commentDiv = this.#template.content.firstElementChild.cloneNode(true)
+                for (const [key, selector] of Object.entries(this.#elements)) {
+                    commentDiv.querySelector(selector).innerText = element[key]
+                }
+                this.#target.append(commentDiv)  
+            }
+            this.#page++ 
+            this.#loading = false
+        } catch (e) {
+            const alert = document.querySelector("#alert")
+            "Erreur serveur", {cause: e}
+        }
     }
 }
 
