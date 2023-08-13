@@ -11,4 +11,9 @@ body {
     font-weight: bold ;
 }
 
+.myError {
+    background-color: hsl(0, 100%, 50%, 0.4);
+}
+
+
 

@@ -23,22 +23,27 @@
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eaque amet, harum cumque atque necessitatibus accusantium reiciendis! Id soluta molestias corporis. Et molestias, quae tempore accusantium non sint soluta blanditiis?</p>
     </article>
 
-    <form action="" method="post"
+    <form 
+    class="js-form"
+    action="" method="post"
     data-url="https://jsonplaceholder.typicode.com/comments"
     data-template="#commentTempl"
     data-target=".comments"
     data-elements= '{"name": ".userName", "body": ".userComment"}'>
-        <input type="text" name="user" id="user" placeholder="Votre nom">
-        <input type="text" name="email" id="email" placeholder="Votre mail">
-        <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Your comment"></textarea>
+        <input type="text" name="name" placeholder="Votre nom">
+        <input type="text" name="email" placeholder="Votre mail">
+        <textarea name="body" cols="30" rows="10" placeholder="Your comment"></textarea>
+        <button type="submit">validé</button>
     </form>
 
     <div class="comments">
         <!--Here goes the comments-->
-
-        <div id="alert" style="display:none">
-            <button>close</button>
-        </div>
+        <template id="alertTempl">
+            <div id="alert">
+                <div id="alertContent"></div>
+                <button id="close">close</button>
+            </div>
+        </template>
 
         <template id="commentTempl">
             <div class="comment">
