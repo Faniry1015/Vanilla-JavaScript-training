@@ -11,7 +11,7 @@ class Carousel {
      * @param {HTMLElement} element 
      * @param {Object} options 
      * @param {Object} [options.slidesToScroll=1] Nombre d'éléments à faire défiler
-     * @param {Object} [options.slidesToScroll=1] Nombre d'éléments visible dans un slide
+     * @param {Object} [options.slidesVisible=1] Nombre d'éléments visible dans un slide
      * @param {boolean} [options.loop = false]  Doit-t-on bouclé en fin de carousel
      * @param {boolean} [options.pagination = false]
      * @param {boolean} [options.navigation = true]
@@ -75,7 +75,6 @@ class Carousel {
     }
 
     /**
-     * 
      * Crée les flèches e navigation
      */
     createNavigation() {
