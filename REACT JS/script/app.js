@@ -1,4 +1,4 @@
-function WelcomeFunct ({name, children}) {
+function WelcomeFunct({ name, children }) {
     return <React.Fragment>
         <h1>Bonjour {name}</h1>
         <p>
@@ -8,26 +8,26 @@ function WelcomeFunct ({name, children}) {
 }
 
 class WelcomeClass extends React.Component {
-    
+
     render() {
         return <React.Fragment>
-        <h1>Bonjour {this.props.name}</h1>
-        <p>
-            {this.props.children}
-        </p>
-    </React.Fragment>
+            <h1>Bonjour {this.props.name}</h1>
+            <p>
+                {this.props.children}
+            </p>
+        </React.Fragment>
     }
 }
 
 class Clock extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props)
-        this.state = {date: new Date()}
+        this.state = { date: new Date() }
         this.timer = null
     }
 
     componentDidMount() {
-       this.timer = window.setInterval(this.tick.bind(this), 1000)
+        this.timer = window.setInterval(this.tick.bind(this), 1000)
     }
 
     componentWillUnmount() {
@@ -35,10 +35,10 @@ class Clock extends React.Component {
     }
 
     tick() {
-        this.setState({date: new Date()})
+        this.setState({ date: new Date() })
     }
 
-    render () {
+    render() {
         return <div>
             Il est {this.state.date.toLocaleDateString()} {this.state.date.toLocaleTimeString()}
         </div>
@@ -49,7 +49,7 @@ class Incrementer extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {n: props.start }
+        this.state = { n: props.start, y: props.step }
         this.timer = null
     }
 
@@ -62,7 +62,9 @@ class Incrementer extends React.Component {
     }
 
     increment() {
-        this.setState((state, props) => ({n: state.n + 1}))
+        this.setState((state, props) => (
+            { n: state.n + state.y }))
+
     }
 
     render() {
@@ -72,13 +74,18 @@ class Incrementer extends React.Component {
     }
 }
 
-function Home () {
+Incrementer.defaultProps = {
+    start: 0,
+    step: 1,
+}
+
+function Home() {
     return <React.Fragment>
-        <WelcomeClass name="Faniry"/>
-        <WelcomeClass name="Elisa"/>
+        <WelcomeClass name="Faniry" />
+        <WelcomeClass name="Elisa" />
         <Clock />
-        <Incrementer start={10}/>
-        <Incrementer start={100}/>
+        <Incrementer start={10} />
+        <Incrementer start={100} step={10} />
     </React.Fragment>
 }
 
