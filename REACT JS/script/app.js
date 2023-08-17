@@ -38,14 +38,15 @@ class Counter extends React.Component {
 
     playPause() {
         const btn = document.querySelector("#btn")
-        console.log(btn)
         const btnClass = btn.classList
-        if (btnClass.contain("play")) {
-            
+        console.log(btnClass)
+        if (btnClass.contains("paused")) {
+            this.timer = window.setInterval(this.tick.bind(this), 1000)
+            console.log(btn)
+        } else {
+            window.clearInterval(this.timer)
         }
-        window.clearInterval(this.timer)
-        btnClass.add("paused")
-        btn.innerText = "play"
+        btn.innerText = btnClass.toggle("paused") ? "play" : "pause"
     }
 
     render() {
