@@ -1,9 +1,7 @@
-function WelcomeFunct({ name, children }) {
+function WelcomeFunc({ name, children }) {
     return <React.Fragment>
         <h1>Bonjour {name}</h1>
-        <p>
-            {children}
-        </p>
+        <div>{children}</div>
     </React.Fragment>
 }
 
@@ -12,17 +10,17 @@ class WelcomeClass extends React.Component {
     render() {
         return <React.Fragment>
             <h1>Bonjour {this.props.name}</h1>
-            <p>
-                {this.props.children}
-            </p>
+            <div>{this.props.children}</div>
         </React.Fragment>
     }
+
 }
 
-class Clock extends React.Component {
+class Counter extends React.Component {
+
     constructor(props) {
         super(props)
-        this.state = { date: new Date() }
+        this.state = { n: props.start, y: props.step }
         this.timer = null
     }
 
@@ -35,58 +33,67 @@ class Clock extends React.Component {
     }
 
     tick() {
-        this.setState({ date: new Date() })
+        this.setState((state, props) => ({ n: this.state.n + this.state.y }))
+    }
+
+    playPause() {
+        const btn = document.querySelector("#btn")
+        console.log(btn)
+        const btnClass = btn.classList
+        window.clearInterval(this.timer)
+        btnClass.add("paused")
     }
 
     render() {
         return <div>
-            Il est {this.state.date.toLocaleDateString()} {this.state.date.toLocaleTimeString()}
+            Counter : {this.state.n}
+            <button id="btn" onClick={this.playPause().bind(this)}>pause</button>
         </div>
     }
+
 }
 
-class Incrementer extends React.Component {
+Counter.defaultProps = {
+    start: 0,
+    step: 1
+}
+
+class Clock extends React.Component {
 
     constructor(props) {
-        super(props)
-        this.state = { n: props.start, y: props.step }
+        super(props) 
+        this.state = {date: new Date()}
         this.timer = null
     }
 
     componentDidMount() {
-        this.timer = window.setInterval(this.increment.bind(this), 1000)
+        this.timer = window.setInterval(this.date.bind(this), 1000)
     }
 
     componentWillUnmount() {
         window.clearInterval(this.timer)
     }
 
-    increment() {
-        this.setState((state, props) => (
-            { n: state.n + state.y }))
-
+    date() {
+        const now = new Date()
+        this.setState((state, props) =>({date: now}) )
     }
 
     render() {
-        return <div>
-            J'attends depuis {this.state.n}
-        </div>
+        return <React.Fragment>
+            Il est : {this.state.date.toLocaleDateString()} {this.state.date.toLocaleTimeString()}
+        </React.Fragment>
     }
 }
 
-Incrementer.defaultProps = {
-    start: 0,
-    step: 1,
-}
-
-function Home() {
+function myComponent() {
     return <React.Fragment>
         <WelcomeClass name="Faniry" />
-        <WelcomeClass name="Elisa" />
+        <Counter start={1} step={10} />
         <Clock />
-        <Incrementer start={10} />
-        <Incrementer start={100} step={10} />
     </React.Fragment>
+
+
 }
 
-ReactDOM.render(Home(), document.querySelector("#app"))
+ReactDOM.render(myComponent(), document.querySelector("#app"))
