@@ -16,7 +16,9 @@ class WelcomeClass extends React.Component {
 
 }
 
-class Incrementer extends React.Component {
+
+//Faniry Incrementer, correction plus bas
+class IncrementerFan extends React.Component {
 
     constructor(props) {
         super(props)
@@ -51,13 +53,51 @@ class Incrementer extends React.Component {
 
     render() {
         return <div>
-            Incrementer Value : {this.state.n}
+            Incrementer Value : {this.state.n} 
             <button id="btn" onClick={this.playPause.bind(this)}>pause</button>
         </div>
     }
-
 }
 
+class Incrementer extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = { n: props.start, timer: null}
+        this.timer = null
+    }
+
+    componentDidMount() {
+        this.play()
+    }
+
+    componentWillUnmount() {
+        window.clearInterval(this.state.timer)
+    }
+
+    increment() {
+        this.setState((state, props) => ({n : state.n + 1}))
+    }
+
+    pause() {
+        window.clearInterval(this.state.timer)
+        this.setState({timer: null})
+    }
+
+    play() {
+        window.clearInterval(this.state.timer)
+        this.setState({timer: window.setInterval(this.increment.bind(this), 1000)}) 
+    }
+
+    render() {
+        return <div>
+            Incrementer Value : {this.state.n} 
+            {this.state.timer ? <button onClick={this.pause.bind(this)}>pause</button> :
+            <button onClick={this.play.bind(this)}>play</button>}
+
+        </div>
+    }
+}
 class ManualIncrementer extends React.Component {
 
     constructor(props) {
@@ -71,7 +111,7 @@ class ManualIncrementer extends React.Component {
 
     render() {
         return <div>
-            Value: {this.state.n}
+            Value: {this.state.n} 
             <button onClick={this.tick.bind(this)}>+1</button>
         </div>
     }
@@ -121,4 +161,5 @@ function myComponent() {
 
 }
 
-ReactDOM.render(myComponent(), document.querySelector("#app"))
+const root = ReactDOM.createRoot(document.querySelector("#app"))
+root.render(myComponent())
