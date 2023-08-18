@@ -113,12 +113,21 @@ class FormMulti extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {nom: ""}
+        this.state = {
+            nom: "",
+            prenom:"",
+            newsletter: false
+        }
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange(e) {
-        this.setState({nom: e.target.value})
+        const targeted = e.target
+        const k = targeted.name
+        const targetType = targeted.type
+        console.log(targetType)
+        const value = targetType === "text" ? targeted.value : targeted.check
+        this.setState({[k] : value})
     }
 
 
@@ -128,6 +137,16 @@ class FormMulti extends React.Component {
             <div>
                 <label htmlFor="nom">Nom</label>
                 <input type="text" id="nom" name="nom" value={this.state.nom} onChange={this.handleChange}></input>
+            </div>
+
+            <div>
+                <label htmlFor="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" value={this.state.prenom} onChange={this.handleChange}></input>
+            </div>
+
+            <div>
+                <label htmlFor="newsletter">S'abonner à la newsletter ?</label>
+                <input type="checkbox" id="newsletter" name="newsletter" checked={this.state.newsletter} onChange={this.handleChange}></input>
             </div>
         </form>
     }
