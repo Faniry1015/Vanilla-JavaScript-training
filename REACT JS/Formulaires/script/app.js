@@ -88,12 +88,59 @@ class SelectMulti extends React.Component {
 
 }
 
+class Radio extends React.Component {
+
+    constructor(props) {
+        super(props) 
+        this.state = {check: false}
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(e) {
+        this.setState({check: e.target.checked})
+   }
+
+    render() {
+        return <form>
+        <label htmlFor="checkB">Cocher pour afficher le message</label>
+            <input name="checkB" type="checkbox" checked={this.state.check} onChange={this.handleChange}></input>
+           {this.state.check ? <div>S'affiche uniquement si la checkbox est cochée</div> : null} 
+        </form>
+    }
+}
+
+class FormMulti extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {nom: ""}
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(e) {
+        this.setState({nom: e.target.value})
+    }
+
+
+
+    render() {
+        return <form>
+            <div>
+                <label htmlFor="nom">Nom</label>
+                <input type="text" id="nom" name="nom" value={this.state.nom} onChange={this.handleChange}></input>
+            </div>
+        </form>
+    }
+}
+
 function Form() {
     return <React.Fragment>
         <InputText />
         <Textarea />
         <Select />
         <SelectMulti />
+        <Radio />
+        <FormMulti />
     </React.Fragment>
 }
 
