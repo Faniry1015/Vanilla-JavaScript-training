@@ -16,7 +16,7 @@ class WelcomeClass extends React.Component {
 
 }
 
-class Counter extends React.Component {
+class Incrementer extends React.Component {
 
     constructor(props) {
         super(props)
@@ -51,14 +51,33 @@ class Counter extends React.Component {
 
     render() {
         return <div>
-            Counter : {this.state.n}
+            Incrementer Value : {this.state.n}
             <button id="btn" onClick={this.playPause.bind(this)}>pause</button>
         </div>
     }
 
 }
 
-Counter.defaultProps = {
+class ManualIncrementer extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {n: props.start}
+    }
+
+    tick() {
+        this.setState((state, props) => ({n: state.n + 1}))
+    }
+
+    render() {
+        return <div>
+            Value: {this.state.n}
+            <button onClick={this.tick.bind(this)}>+1</button>
+        </div>
+    }
+}
+
+Incrementer.defaultProps = {
     start: 0,
     step: 1
 }
@@ -94,7 +113,8 @@ class Clock extends React.Component {
 function myComponent() {
     return <React.Fragment>
         <WelcomeClass name="Faniry" />
-        <Counter start={1} step={10} />
+        <Incrementer start={1} step={2} />
+        <ManualIncrementer start={0} />
         <Clock />
     </React.Fragment>
 
