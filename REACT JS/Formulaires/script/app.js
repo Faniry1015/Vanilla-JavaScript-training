@@ -88,7 +88,7 @@ class SelectMulti extends React.Component {
 
 }
 
-class Radio extends React.Component {
+class Checkbox extends React.Component {
 
     constructor(props) {
         super(props) 
@@ -109,6 +109,23 @@ class Radio extends React.Component {
     }
 }
 
+function Form() {
+    return <React.Fragment>
+        <InputText />
+        <Textarea />
+        <Select />
+        <SelectMulti />
+        <Checkbox />
+    </React.Fragment>
+}
+
+const root = ReactDOM.createRoot(document.querySelector("#app"))
+root.render(<Form />)
+
+
+/************************************************************************************************************ */
+
+/**Champ controler : react track à chaque changement */
 class FormMulti extends React.Component {
 
     constructor(props) {
@@ -152,16 +169,11 @@ class FormMulti extends React.Component {
     }
 }
 
-function Form() {
+function Form2() {
     return <React.Fragment>
-        <InputText />
-        <Textarea />
-        <Select />
-        <SelectMulti />
-        <Radio />
         <FormMulti />
     </React.Fragment>
 }
 
-const root = ReactDOM.createRoot(document.querySelector("#app"))
-root.render(<Form />)
+const root2 = ReactDOM.createRoot(document.querySelector("#app2"))
+root2.render(<Form2 />)
