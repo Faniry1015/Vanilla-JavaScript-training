@@ -78,15 +78,15 @@ class Thermomètre extends React.Component {
 
 
     render() {
-        const {temperature} = this.state
-        const celsius = this.state.scale === "c" ? temperature : tryConvert(temperature, toCelsius)
-        const fahrenheit = this.state.scale ==="f" ? temperature : tryConvert(temperature, toFahrenheit)
-        return <form className="container">
+        const {temperature, scale} = this.state
+        const celsius = scale === "c" ? temperature : tryConvert(temperature, toCelsius)
+        const fahrenheit = scale ==="f" ? temperature : tryConvert(temperature, toFahrenheit)
+        return <form className="container mt-4">
             <h1>Etat d'ébulition de l'eau</h1>
             <TemperatureInput scale="c" temperature={celsius} onTemperatureChange={this.handleCelsiusChange}/>
             <TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={this.handleFahrennheitChange} />
             <hr />
-            <BoilingVerdict celsius={parseFloat(celsius)} />
+            <BoilingVerdict celsius={celsius} />
             {JSON.stringify(this.state)}
         </form>
     }
